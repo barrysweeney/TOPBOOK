@@ -17,5 +17,6 @@ exports.logOut = (req, res, next) => {
 
 // GET request for home page (timeline)
 exports.getHomePage = (req, res, next) => {
+  res.send("not implemented yet");
   // get all posts by the logged in user or by their friends
 };
