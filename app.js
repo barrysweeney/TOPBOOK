@@ -28,7 +28,7 @@ passport.use(
     {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      callbackURL: "https://calm-falls-42453.herokuapp.com/",
+      callbackURL: "https://calm-falls-42453.herokuapp.com/return/",
     },
     function (accessToken, refreshToken, profile, cb) {
       User.findOrCreate({ githubId: profile.id }, function (err, user) {
@@ -74,9 +74,17 @@ app.use("/users/:id/friendships", friendshipsRouter);
 
 app.get("/login", passport.authenticate("github"));
 
-app.get("/", ensureLoggedIn(), function (req, res) {
+app.get("/", function (req, res) {
   res.send("timeline");
 });
+
+app.get(
+  "/return",
+  passport.authenticate("github", { failureRedirect: "/login" }),
+  function (req, res) {
+    res.redirect("/");
+  }
+);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
