@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const usersController = require("../controllers/usersController");
+const ensureLoggedIn = require("connect-ensure-login").ensureLoggedIn;
 
 // GET request for all users
-router.get("/", usersController.allUsers);
+router.get("/", ensureLoggedIn(), usersController.allUsers);
 
 // GET request for user
 router.get("/:id", usersController.userGet);
