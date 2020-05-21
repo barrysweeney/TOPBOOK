@@ -72,10 +72,11 @@ app.use("/posts", postsRouter);
 app.use("/posts/:id/comments", commentsRouter);
 app.use("/users/:id/friendships", friendshipsRouter);
 
-app.get("/login", passport.authenticate("github"));
+app.get("/login", (req, res) => res.render("login"));
+app.get("/login/github", passport.authenticate("github"));
 
 app.get("/", function (req, res) {
-  res.send("timeline");
+  res.render("index", { user: req.user });
 });
 
 app.get(
