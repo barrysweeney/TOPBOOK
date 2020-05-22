@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("./partials/head") %>
+  <body>
+    <%- include("./partials/navbar") %>
+    <h1><%= user.name %>'s Timeline</h1>
+    <h2>New Post</h2>
+    <form action="/posts/new" method="post">
+      <label for="content">Content</label><br />
+      <textarea name="content" type="textarea" required></textarea><br />
+      <button>Create Post</button>
+    </form>
+    <% posts.forEach(post => { %>
+    <div>
+      <p><%= post.content %></p>
+      <p>By: <%= post.user.name %></p>
+      <p>Date: <%= post.timestamp %></p>
+      <p>Likes: <%= post.likes %></p>
+      <form action="/posts/<%= post.id %>/like" method="POST">
+        <button>Like this post</button>
+      </form>
+      <h2>Comments</h2>
+      <% comments.forEach(comment => {  %>
+        <!-- loop through each comment and add it below the post if it matches the posts id-->
+        <% if (comment.post.equals(post.id)){ %>
+      <p><%= comment.content %></p>
+      <p><%= comment.user.name %></p>
+      <p>Date: <%= comment.timestamp %></p>
+      <p>Likes: <%= comment.likes %></p>
+      <form action="/posts/<%= post.id %>/comments/<%= comment.id %>/like" method="POST">
+      <button>Like this comment</button>
+      </form>
+        <%}%>
+      <% }) %> 
+     
+      <h3>New Comment</h2>
+      <form action="/posts/<%= post.id %>/comments/new" method="post">
+        <label for="content">Content</label><br />
+        <textarea name="content" type="textarea" required></textarea><br />
+        <button>Create Comment</button>
+      </form>
+    </div>
+    <% }) %>
+  </body>
+</html>

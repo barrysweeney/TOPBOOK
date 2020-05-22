@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("./partials/head") %>
+  <body>
+    <%- include("./partials/navbar") %> <% if (friendRequests.length > 0) { %>
+    <ul>
+      <% friendRequests.forEach(friendRequest => { %>
+      <li>
+        Friend request from
+        <a href="/users/<%= friendRequest.user._id %>/profile"
+          ><%= friendRequest.user.name %></a
+        >
+        is pending
+        <form
+          action="/users/friendships/<%= friendRequest.id %>/accept"
+          method="POST"
+        >
+          <button>Accept</button>
+        </form>
+      </li>
+      <% }) %>
+    </ul>
+    <% }else{ %>
+    <p>No new friend requests received</p>
+    <% } %>
+  </body>
+</html>

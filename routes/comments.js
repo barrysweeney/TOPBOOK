@@ -15,6 +15,6 @@ router.post("/new", commentsController.commentCreate);
 router.put("/:commentid/edit", commentsController.commentEdit);
 
 // PUT request to like comment
-router.put("/:commentid/like", commentsController.commentLike);
+router.post("/:commentid/like", commentsController.commentLike);
 
 module.exports = router;

@@ -69,7 +69,7 @@ exports.postDelete = (req, res, next) => {
   });
 };
 
-// PUT request to like post
+// POST request to like post
 exports.postLike = (req, res, next) => {
   // https://medium.com/@salonimalhotra1ind/how-to-increment-a-number-value-in-mongoose-785066ba09d8
   Post.findByIdAndUpdate(
@@ -84,7 +84,7 @@ exports.postLike = (req, res, next) => {
       if (!doc) {
         return res.sendStatus(404);
       }
-      return res.sendStatus(200);
+      return res.redirect(req.get("referer"));
     }
   );
 };

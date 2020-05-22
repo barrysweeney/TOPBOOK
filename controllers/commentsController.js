@@ -49,7 +49,7 @@ exports.commentCreate = [
   // process request after validation and sanitization
   (req, res, next) => {
     // create a post object with escaped data
-    const post = new Post({
+    const comment = new Comment({
       content: req.body.content,
       user: req.user,
       post: req.params.id,
@@ -57,7 +57,7 @@ exports.commentCreate = [
       if (err) {
         return next(err);
       }
-      return res.redirect("/");
+      return res.redirect(req.get("referer"));
     });
   },
 ];
@@ -85,7 +85,7 @@ exports.commentEdit = [
   },
 ];
 
-// PUT request to like comment
+// POST request to like comment
 exports.commentLike = (req, res, next) => {
   // https://medium.com/@salonimalhotra1ind/how-to-increment-a-number-value-in-mongoose-785066ba09d8
   Comment.findByIdAndUpdate(
@@ -100,7 +100,7 @@ exports.commentLike = (req, res, next) => {
       if (!doc) {
         return res.sendStatus(404);
       }
-      return res.sendStatus(200);
+      return res.redirect(req.get("referer"));
     }
   );
 };

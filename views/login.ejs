@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>TOPBOOK</title>
-    <link rel="stylesheet" href="/stylesheets/style.css" />
-  </head>
-
+  <%- include("./partials/head") %>
   <body>
-    <h1>TOPBOOK</h1>
-    <p><a href="/login/github">Log in with Github</a></p>
+    <%- include("./partials/navbar") %>
+    <p>
+      <!-- https://github.com/logos -->
+      <img src="/images/githublogo.png" alt="" />
+      <a href="/login/github">Log in with Github</a>
+    </p>
   </body>
 </html>

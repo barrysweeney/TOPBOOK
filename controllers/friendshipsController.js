@@ -4,12 +4,10 @@ const bcrypt = require("bcryptjs");
 const async = require("async");
 const Friendship = require("../models/friendship");
 
-// :id is the user id and :friendshipid is the friendship id
-
 // POST request to create friendship
 exports.friendshipCreate = (req, res, next) => {
   const friendship = new Friendship({
-    user1: req.user,
+    user1: req.user._id,
     user2: req.params.id,
   }).save((err) => {
     if (err) {
@@ -19,28 +17,22 @@ exports.friendshipCreate = (req, res, next) => {
   return res.sendStatus(200);
 };
 
-// PUT request to update friendship status
-exports.friendshipEdit = [
-  validator.body("status").trim(),
-  // sanitize all fields
-  validator.sanitizeBody("*").escape(),
-  // process request after validation and sanitization
-  (req, res, next) => {
-    Friendship.findByIdAndUpdate(
-      req.params.friendshipid,
-      { status: req.body.status },
-      (err, doc) => {
-        if (err) {
-          return next(err);
-        }
-        if (!doc) {
-          return res.sendStatus(404);
-        }
-        return res.sendStatus(200);
+// POST request to accept friendship status
+exports.friendshipEdit = (req, res, next) => {
+  Friendship.findByIdAndUpdate(
+    req.params.id,
+    { status: "Accepted" },
+    (err, doc) => {
+      if (err) {
+        return next(err);
       }
-    );
-  },
-];
+      if (!doc) {
+        return res.sendStatus(404);
+      }
+      return res.redirect("/");
+    }
+  );
+};
 
 // DELETE request to delete friendship
 exports.friendshipDelete = (req, res, next) => {

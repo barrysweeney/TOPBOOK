@@ -1,11 +1,14 @@
 const mongoose = require("mongoose");
+const findOrCreate = require("mongoose-find-or-create");
 
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
+  githubId: { type: String, required: true },
   name: { type: String, required: true },
-  password: { type: String, required: true, select: false }, // https://www.curtismlarson.com/blog/2016/05/11/mongoose-mongodb-exclude-select-fields/
 });
+
+UserSchema.plugin(findOrCreate);
 
 //Export model
 module.exports = mongoose.model("User", UserSchema);

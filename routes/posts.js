@@ -14,7 +14,7 @@ router.put("/:id/edit", postsController.postEdit);
 // DELETE request to delete post
 router.delete("/:id/delete", postsController.postDelete);
 
-// PUT request to like post
-router.put("/:id/like", postsController.postLike);
+// POST request to like post
+router.post("/:id/like", postsController.postLike);
 
 module.exports = router;

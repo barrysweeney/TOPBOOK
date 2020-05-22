@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("./partials/head") %>
+  <body>
+    <%- include("./partials/navbar") %>
+    <h1><%= userProfile.name %>'s friends</h1>
+    <ul>
+      <% friends.forEach(friend => { %>
+      <li><a href="/users/<%= friend.id %>/profile"><%= friend.name %></a></li>
+      <% }) %>
+    </ul>
+  </body>
+</html>

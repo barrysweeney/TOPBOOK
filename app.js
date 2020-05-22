@@ -5,11 +5,14 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const helmet = require("helmet");
 const compression = require("compression");
+const session = require("express-session");
 const mongoose = require("mongoose");
+const findOrCreate = require("mongoose-find-or-create");
 const ensureLoggedIn = require("connect-ensure-login").ensureLoggedIn;
 const seedDb = require("./seeds.js");
 const passport = require("passport");
 const GitHubStrategy = require("passport-github").Strategy;
+const User = require("./models/user");
 require("dotenv").config();
 
 const indexRouter = require("./routes/index");
@@ -28,12 +31,16 @@ passport.use(
     {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      callbackURL: "https://calm-falls-42453.herokuapp.com/return/",
+      //callbackURL: "https://calm-falls-42453.herokuapp.com/return/",
+      callbackURL: "http://localhost:3000/return",
     },
     function (accessToken, refreshToken, profile, cb) {
-      User.findOrCreate({ githubId: profile.id }, function (err, user) {
-        return cb(err, user);
-      });
+      User.findOrCreate(
+        { githubId: profile.id, name: profile.displayName },
+        function (err, user) {
+          return cb(err, user);
+        }
+      );
     }
   )
 );
@@ -63,6 +70,11 @@ app.use(compression()); // compress all routes
 app.use(helmet());
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+  })
+);
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -70,9 +82,9 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
 app.use("/posts/:id/comments", commentsRouter);
-app.use("/users/:id/friendships", friendshipsRouter);
+app.use("/users/friendships", friendshipsRouter);
 
-app.get("/login", (req, res) => res.render("login"));
+app.get("/login", (req, res) => res.render("login", { user: req.user }));
 app.get("/login/github", passport.authenticate("github"));
 
 app.get("/", function (req, res) {

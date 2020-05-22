@@ -1,0 +1,26 @@
+<nav class="navbar">
+  <ul>
+    <% if(user) {%>
+    <!-- https://twitter.com/TheOdinProject/photo -->
+    <li><img src="/images/toplogo.jpg" alt="The Odin Project Logo" /></li>
+
+    <li><a href="/users/<%= user._id %>/profile">My profile</a></li>
+    <li><a href="/users/timeline">My timeline</a></li>
+    <li><a href="/users/friend-requests">Friend requests</a></li>
+    <li><a href="/users">Find new friends</a></li>
+
+    <li class="company-name">TOPBOOK</li>
+
+    <% }else{ %>
+
+    <li><img src="/images/toplogo.jpg" alt="The Odin Project Logo" /></li>
+
+    <li><a href="">My profile</a></li>
+    <li><a href="">My timeline</a></li>
+    <li><a href="">Friend Requests</a></li>
+    <li><a href="">Find new friends</a></li>
+
+    <li class="company-name">TOPBOOK</li>
+    <% } %>
+  </ul>
+</nav>
