@@ -6,6 +6,7 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
   githubId: { type: String, required: true },
   name: { type: String, required: true },
+  photoURL: { type: String, required: false },
 });
 
 UserSchema.plugin(findOrCreate);

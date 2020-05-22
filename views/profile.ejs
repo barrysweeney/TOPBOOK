@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html>
-  <head>
     <%- include("./partials/head") %>
-  </head>
-
   <body>
     <%- include("./partials/navbar") %>
     <h1><%= userProfile.name %>'s Profile</h1>
+  <% if (userProfile.photoURL) {%> <img src="<%= userProfile.photoURL%>" alt="User's profile photo" class="profile-photo"><% } %>
   <% if (canMakeFriendRequest) {%> <form action="/users/friendships/<%= userProfile.id %>/new" method="post"><button>Send friend request</button></form> <% } %> 
     <p>
       <a href="/users/<%= userProfile.id %>/friends">See <%= userProfile.name %>'s friends</a>

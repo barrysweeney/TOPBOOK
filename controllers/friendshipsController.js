@@ -14,7 +14,7 @@ exports.friendshipCreate = (req, res, next) => {
       return next(err);
     }
   });
-  return res.sendStatus(200);
+  return res.redirect("/");
 };
 
 // POST request to accept friendship status

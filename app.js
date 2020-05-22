@@ -34,12 +34,29 @@ passport.use(
       callbackURL: "https://calm-falls-42453.herokuapp.com/return",
     },
     function (accessToken, refreshToken, profile, cb) {
-      User.findOrCreate(
-        { githubId: profile.id, name: profile.displayName },
-        function (err, user) {
-          return cb(err, user);
-        }
-      );
+      console.log(profile.photos[0].value);
+      if (profile.photos[0].value) {
+        User.findOrCreate(
+          {
+            githubId: profile.id,
+            name: profile.displayName,
+            photoURL: profile.photos[0].value,
+          },
+          function (err, user) {
+            return cb(err, user);
+          }
+        );
+      } else {
+        User.findOrCreate(
+          {
+            githubId: profile.id,
+            name: profile.displayName,
+          },
+          function (err, user) {
+            return cb(err, user);
+          }
+        );
+      }
     }
   )
 );
