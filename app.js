@@ -31,7 +31,7 @@ passport.use(
     {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      callbackURL: "/return",
+      callbackURL: "https://calm-falls-42453.herokuapp.com/return",
     },
     function (accessToken, refreshToken, profile, cb) {
       User.findOrCreate(
