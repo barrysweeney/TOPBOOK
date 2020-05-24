@@ -5,9 +5,6 @@ const Comment = require("./models/comment");
 
 const seedDb = (req, res, next) => {
   for (let i = 0; i < 200; i++) {
-    if (err) {
-      return next(err);
-    }
     new User({
       name: faker.name.findName(),
       photoURL: faker.image.imageUrl(),
