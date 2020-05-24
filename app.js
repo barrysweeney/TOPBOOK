@@ -34,7 +34,6 @@ passport.use(
       callbackURL: "https://calm-falls-42453.herokuapp.com/return",
     },
     function (accessToken, refreshToken, profile, cb) {
-      console.log(profile.photos[0].value);
       if (profile.photos[0].value) {
         User.findOrCreate(
           {
@@ -72,7 +71,7 @@ passport.deserializeUser(function (obj, cb) {
 
 const app = express();
 
-//seedDb();
+seedDb();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
