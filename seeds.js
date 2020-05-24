@@ -3,6 +3,7 @@ const User = require("./models/user");
 const Post = require("./models/post");
 const Comment = require("./models/comment");
 
+// create 200 new users with a random post and comment for each of them
 const seedDb = (req, res, next) => {
   for (let i = 0; i < 200; i++) {
     new User({

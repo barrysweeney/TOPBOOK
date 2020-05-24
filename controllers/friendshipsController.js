@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const async = require("async");
 const Friendship = require("../models/friendship");
 
-// POST request to create friendship
+// POST request to send friend request (create friendship wityh a status of pending)
 exports.friendshipCreate = (req, res, next) => {
   const friendship = new Friendship({
     user1: req.user._id,
@@ -17,7 +17,7 @@ exports.friendshipCreate = (req, res, next) => {
   return res.redirect("/");
 };
 
-// POST request to accept friendship status
+// POST request to accept friend request (change friendship status to accepted)
 exports.friendshipEdit = (req, res, next) => {
   Friendship.findByIdAndUpdate(
     req.params.id,
@@ -32,19 +32,6 @@ exports.friendshipEdit = (req, res, next) => {
       return res.redirect("/");
     }
   );
-};
-
-// DELETE request to delete friendship
-exports.friendshipDelete = (req, res, next) => {
-  Post.findByIdAndRemove(req.params.friendshipid, (err, doc) => {
-    if (err) {
-      return next(err);
-    }
-    if (!doc) {
-      return res.sendStatus(404);
-    }
-    return res.sendStatus(204);
-  });
 };
 
 // GET request for all friendships of a specific user

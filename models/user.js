@@ -9,7 +9,7 @@ const UserSchema = new Schema({
   photoURL: { type: String, required: false },
 });
 
+// needed by the Github Authentication callback in app.js
 UserSchema.plugin(findOrCreate);
 
-//Export model
 module.exports = mongoose.model("User", UserSchema);

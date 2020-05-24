@@ -3,16 +3,6 @@ const validator = require("express-validator");
 const async = require("async");
 const Post = require("../models/post");
 
-// GET request for all posts
-exports.allPosts = (req, res) => {
-  Post.find({}).exec((err, postList) => {
-    if (err) {
-      return next(err);
-    }
-    res.json(postList);
-  });
-};
-
 // POST request to create post
 exports.postCreate = [
   validator.body("content").trim(),

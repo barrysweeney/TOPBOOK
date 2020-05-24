@@ -9,5 +9,4 @@ const PostSchema = new Schema({
   likes: { type: Number, required: false, default: 0 },
 });
 
-//Export model
 module.exports = mongoose.model("Post", PostSchema);

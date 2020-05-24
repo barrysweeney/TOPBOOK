@@ -4,12 +4,14 @@
   <body>
     <%- include("./partials/navbar") %>
     <h1><%= user.name %>'s Timeline</h1>
+    <!-- display form to create a new post -->
     <h2>New Post</h2>
     <form action="/posts/new" method="post">
       <label for="content">Content</label><br />
       <textarea name="content" type="textarea" required></textarea><br />
       <button>Create Post</button>
     </form>
+    <!-- loop through posts, displaying the posts, comments and a form for new coments -->
     <% posts.forEach(post => { %>
     <div>
       <p><%= post.content %></p>
@@ -32,7 +34,6 @@
       </form>
         <%}%>
       <% }) %> 
-     
       <h3>New Comment</h2>
       <form action="/posts/<%= post.id %>/comments/new" method="post">
         <label for="content">Content</label><br />

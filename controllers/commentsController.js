@@ -7,40 +7,6 @@ const Comment = require("../models/comment");
 
 // post is specified by :id in url and comment is specified by :commentid
 
-// GET request for all comments for a specific post
-exports.allComments = (req, res, next) => {
-  async.parallel(
-    {
-      commentList: (callback) =>
-        Comment.find({ post: req.params.id }).exec(callback),
-    },
-    (err, results) => {
-      if (err) {
-        return next(err);
-      }
-      if (results.commentList === null) {
-        const err = new Error("Post not found");
-        err.status = 404;
-        return next(err);
-      }
-      res.json(results.commentList);
-    }
-  );
-};
-
-// DELETE request to delete comment
-exports.commentDelete = (req, res, next) => {
-  Comment.findByIdAndRemove(req.params.commentid, (err, doc) => {
-    if (err) {
-      return next(err);
-    }
-    if (!doc) {
-      return res.sendStatus(404);
-    }
-    return res.sendStatus(204);
-  });
-};
-
 // POST request to create comment
 exports.commentCreate = [
   validator.body("content").trim(),

@@ -4,6 +4,7 @@
   <body>
     <%- include("./partials/navbar") %> <% if (friendRequests.length > 0) { %>
     <ul>
+      <!-- loop over each user who has sent a friedn request and link to their profile and display a button to accept the request -->
       <% friendRequests.forEach(friendRequest => { %>
       <li>
         Friend request from

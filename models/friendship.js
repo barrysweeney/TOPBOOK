@@ -8,5 +8,4 @@ const FriendshipSchema = new Schema({
   status: { type: String, required: false, default: "Pending" },
 });
 
-//Export model
 module.exports = mongoose.model("Friendship", FriendshipSchema);

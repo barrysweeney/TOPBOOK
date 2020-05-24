@@ -1,6 +1,4 @@
 const User = require("../models/user");
-const validator = require("express-validator");
-const bcrypt = require("bcryptjs");
 const async = require("async");
 const Post = require("../models/post");
 const Friendship = require("../models/friendship");
@@ -13,21 +11,6 @@ exports.allUsers = (req, res, next) => {
       return next(err);
     }
     res.render("user-list", { userList: userList, user: req.user });
-  });
-};
-
-// GET request for user
-exports.userGet = (req, res, next) => {
-  User.findById(req.params.id).exec((err, user) => {
-    if (err) {
-      return next(err);
-    }
-    if (user === null) {
-      const err = new Error("User not found");
-      err.status = 404;
-      return next(err);
-    }
-    return res.json(user);
   });
 };
 
@@ -74,19 +57,19 @@ exports.userTimeline = (req, res, next) => {
                 User.findById(friendships[i].user2).exec((err, user) => {
                   if (err) return next(err);
                   if (user === null) return res.sendStatus(404);
-
-                  friends.push(user);
-
-                  if (friends.length === friendships.length) resolve();
+                  if (friendships[i].status == "Accepted") {
+                    friends.push(user);
+                  }
+                  if (i === friendships.length - 1) resolve();
                 });
               } else {
                 User.findById(friendships[i].user1).exec((err, user) => {
                   if (err) return next(err);
                   if (user === null) return res.sendStatus(404);
-
-                  friends.push(user);
-
-                  if (friends.length === friendships.length) resolve();
+                  if (friendships[i].status == "Accepted") {
+                    friends.push(user);
+                  }
+                  if (i === friendships.length - 1) resolve();
                 });
               }
             }
@@ -234,7 +217,7 @@ exports.userProfile = (req, res, next) => {
         err.status = 404;
         return next(err);
       }
-      // can't make friend request to yourself or if you already made or ecieved a request from the user
+      // can't make friend request to yourself or if you already made or recieved a request from the user
       let canMakeFriendRequest =
         req.user._id.toString() !== req.params.id.toString();
       results.friends.forEach((friend) => {
@@ -252,16 +235,6 @@ exports.userProfile = (req, res, next) => {
       });
     }
   );
-};
-
-// GET request for all posts by a specific user
-exports.userPosts = (req, res, next) => {
-  Post.find({ user: req.params.id }).exec((err, posts) => {
-    if (err) {
-      return next(err);
-    }
-    return res.json(posts);
-  });
 };
 
 // GET request for logged in users friend requests

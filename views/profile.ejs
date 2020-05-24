@@ -4,11 +4,14 @@
   <body>
     <%- include("./partials/navbar") %>
     <h1><%= userProfile.name %>'s Profile</h1>
+    <!-- Display users avatar if a url to their avatar is stored in the database -->
   <% if (userProfile.photoURL) {%> <img src="<%= userProfile.photoURL%>" alt="User's profile photo" class="profile-photo"><% } %>
+  <!-- Display button to send friend requests if the user is not the logged in user or if a friend request has already been sent to or from this user -->
   <% if (canMakeFriendRequest) {%> <form action="/users/friendships/<%= userProfile.id %>/new" method="post"><button>Send friend request</button></form> <% } %> 
     <p>
       <a href="/users/<%= userProfile.id %>/friends">See <%= userProfile.name %>'s friends</a>
     </p>
+    <!-- loop through posts, displaying the posts, comments and a form for new coments -->
     <% posts.forEach(post => { %>
     <div class="post">
       <p><%= post.content %></p>
@@ -31,7 +34,6 @@
       </form>
       <%}%>
           <% }) %>
-    
       <h3>New Comment</h2>
         <form action="/posts/<%= post.id %>/comments/new" method="post">
           <label for="content">Content</label><br />

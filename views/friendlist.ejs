@@ -5,6 +5,7 @@
     <%- include("./partials/navbar") %>
     <h1><%= userProfile.name %>'s friends</h1>
     <ul>
+      <!-- Provide a link to each friends profile -->
       <% friends.forEach(friend => { %>
       <li><a href="/users/<%= friend.id %>/profile"><%= friend.name %></a></li>
       <% }) %>
